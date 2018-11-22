@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "start": "node --experimental-modules server/server.mjs",
+    "heroku-postbuild": "yarn build",
     "serve": "vue-cli-service serve",
     "backend:dev": "nodemon --experimental-modules server/server.mjs",
     "backend": "node --experimental-modules server/server.mjs",
