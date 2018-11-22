@@ -30,11 +30,11 @@ server.register(fastifyStatic, {
 });
 server.register(compress);
 
-server.listen(process.env.PORT || 3000, (err) => {
+server.listen(parseInt(process.env.PORT, 10) || 3000, (err) => {
   if (err) {
     console.log(err);
   }
-  console.log('Fastify server running at: http://localhost:3000');
+  console.log(`Fastify server running at: http://localhost:${process.env.PORT || 3000}`);
 });
 
 let sIndex;
