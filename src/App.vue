@@ -1,29 +1,91 @@
-<template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+<template lang="pug">
+  div#app
+    h1 What the ont***gy <sup>[alpha]</sup>
+    navigation
+    router-view
+    footer.footer
+      p.small.italic.lightgrey.center
+        span Copyright © 2018 Philipp Gfeller, 
+        span released under the MIT licence, 
+        a(href="https://github.com/tuelsch/whattheontology") project on github
 </template>
 
 <style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+$lightgrey: rgb(180,180,180);
+$anthracite: #303030;
+* {
+  box-sizing: border-box;
+}
+
+body {
+  // Prevent page jumping between searches
+  overflow-y: scroll;
+  --lightgrey: rgb(180,180,180);
+  --noto-sans: 'Noto Sans SC', Helvetica, Arial, sans-serif;
+  margin: 0;
+  font-family: Helvetica, Arial, sans-serif;
+  letter-spacing: -.00278rem;
+  line-height: 1.6;
+  word-spacing: -0.05rem;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  color: $anthracite;
 }
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+
+#app {
+  margin: 0 1em;
+}
+
+.footer {
+  margin-top: 2em;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--noto-sans);
+}
+
+h1 {
+  text-align: center;
+}
+
+a {
+  color: inherit;
+}
+
+p pre {
+  display: inline-block;
+}
+
+.center { text-align: center; }
+.small { font-size: 0.85em; }
+.lightgrey { color: $lightgrey; }
+.italic { font-style: italic; }
+.error { color: crimson; }
+
+.container {
+  max-width: 600px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.box {
+  > *:first-child { margin-top: 0; }
+  > *:last-child { margin-bottom : 0; }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
 }
 </style>
