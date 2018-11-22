@@ -29,13 +29,7 @@ server.register(fastifyStatic, {
   root: path.join(process.cwd(), 'dist'),
 });
 server.register(compress);
-
-server.listen(parseInt(process.env.PORT, 10) || 3000, (err) => {
-  if (err) {
-    console.log(err);
-  }
-  console.log(`Fastify server running at: http://localhost:${process.env.PORT || 3000}`);
-});
+server.listen(process.env.PORT || 3000, '0.0.0.0');
 
 let sIndex;
 let rIndex;
