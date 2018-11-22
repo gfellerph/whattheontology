@@ -1,5 +1,4 @@
 import path from 'path';
-import fs from 'fs';
 import fastify from 'fastify';
 import compress from 'fastify-compress';
 import fastifyStatic from 'fastify-static';
@@ -41,7 +40,7 @@ build()
   }) => {
     sIndex = searchIndex;
     rIndex = referenceIndex;
-    console.log('index ready');
+    console.log(`indexed ${Object.keys(rIndex).length} properties`);
   })
   .catch((error) => {
     throw new Error(error);
