@@ -2,7 +2,7 @@
 
 https://whattheontology.herokuapp.com/
 
-A search engine for RDF namespaces, properties, classes, ontologies and datatypes recommended by the SOLID project (https://github.com/solid/solid-ui/blob/master/src/ns.js).
+A search engine for RDF namespaces, properties, classes, ontologies and datatypes recommended by the [SOLID project](https://solid.mit.edu/) (https://github.com/solid/solid-ui/blob/master/src/ns.js).
 
 For a list of supported namespaces, see the [ontology dictionary](https://github.com/tuelsch/whattheontology/blob/master/server/ontology-dictionary.mjs). Fork this repo and create a pull request if you like to add another.
 
