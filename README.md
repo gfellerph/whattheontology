@@ -1,5 +1,7 @@
 # whattheontology
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/tuelsch/whattheontology.svg)](https://greenkeeper.io/)
+
 https://whattheontology.herokuapp.com/
 
 A search engine for RDF namespaces, properties, classes, ontologies and datatypes recommended by the [SOLID project](https://solid.mit.edu/) (https://github.com/solid/solid-ui/blob/master/src/ns.js).
