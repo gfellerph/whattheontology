@@ -10,7 +10,8 @@
     "backend": "node --experimental-modules server/server.mjs",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "vue-cli-service test:unit",
+    "test": "jest"
   },
   "dependencies": {
     "debounce": "^1.2.0",
