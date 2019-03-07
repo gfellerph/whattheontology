@@ -12,7 +12,12 @@ module.exports = function(server, options, next) {
   }, async (req, res) => {
     try {
       // Fetching step
-      const request = await fetch(req.body.url);
+      const request = await fetch(req.body.url, {
+        method: 'GET',
+        headers: {
+          Accept: 'application/ld+json, application/rdf+xml, text/n3, text/turtle, application/n-triples, application/n-quads, application/nquads',
+        }
+      });
       const rawData = await request.text();
 
       // Conversion step
