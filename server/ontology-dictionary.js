@@ -1,4 +1,4 @@
-export default {
+module.exports = {
   // Spec reference, as found in 'why.value' in quad statements
   'https://www.w3.org/ns/solid/terms': {
     // Nickname for the spec
@@ -131,6 +131,10 @@ export default {
   'http://www.w3.org/2001/XMLSchema#': {
     title: 'XML',
     resource: 'https://www.w3.org/2009/XMLSchema/XMLSchema.xsd',
+  },
+  'https://raw.githubusercontent.com/BFO-ontology/BFO/v2.0/bfo.owl': {
+    title: 'BFO',
+    resource: 'https://raw.githubusercontent.com/BFO-ontology/BFO/v2.0/bfo.owl',
   },
   /* 'whatever': {
     title: 'Error',

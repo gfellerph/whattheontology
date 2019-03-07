@@ -1,8 +1,9 @@
-import path from 'path';
-import fastify from 'fastify';
-import compress from 'fastify-compress';
-import fastifyStatic from 'fastify-static';
-import build from './index';
+const path = require('path');
+const fastify = require('fastify');
+const compress = require('fastify-compress');
+const fastifyStatic = require('fastify-static');
+const build = require('./index');
+const add = require('./add');
 
 /*
   TODO:
@@ -28,23 +29,27 @@ server.register(fastifyStatic, {
   root: path.join(process.cwd(), 'dist'),
 });
 server.register(compress);
-server.listen(process.env.PORT || 3000, '0.0.0.0');
+server.register(add);
+server.listen(process.env.PORT || 3000, (err, address) => {
+  console.log(`Server listening at ${address}`);
+});
 
 let sIndex;
 let rIndex;
 
-build()
+/* build()
   .then(({
     searchIndex,
     referenceIndex,
   }) => {
     sIndex = searchIndex;
     rIndex = referenceIndex;
+    // tslint:disable-next-line:no-console
     console.log(`indexed ${Object.keys(rIndex).length} properties`);
   })
   .catch((error) => {
     throw new Error(error);
-  });
+  }); */
 
 
 server.get('/search', async (request, response) => {
@@ -76,3 +81,5 @@ server.get('/search', async (request, response) => {
 server.setNotFoundHandler((request, response) => {
   response.sendFile('index.html');
 });
+
+module.exports = server;

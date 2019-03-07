@@ -1,6 +1,6 @@
-import builder from './builder';
-import rdflib from 'rdflib';
-import dict from './ontology-dictionary';
+const builder = require('./builder');
+const rdflib = require('rdflib');
+const dict = require('./ontology-dictionary');
 
 // Commonly used properties/predicates
 const label = 'http://www.w3.org/2000/01/rdf-schema#label';
@@ -37,7 +37,7 @@ const fetchAvailableOntologies = () => {
   }));
 };
 
-export default async function build() {
+module.exports = async function build() {
   await fetchAvailableOntologies()
     .catch(() => {
       // Ignore failed ontologies

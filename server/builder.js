@@ -1,4 +1,4 @@
-import lunr from 'lunr';
+const lunr = require('lunr');
 
 const builder = new lunr.Builder();
 builder.field('aclLabel', { boost: 20 });
@@ -11,4 +11,4 @@ builder.field('note', { boost: 1 });
 builder.field('ns');
 builder.ref('uri');
 
-export default builder;
+module.exports = builder;
