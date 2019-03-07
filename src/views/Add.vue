@@ -20,7 +20,8 @@
       h3.h5 Failed
       ul.errors
         li(v-for='(check, index) in errored')
-          span [X] {{check.label}}
+          span [X] 
+          span(v-html="check.label")
           input.error-details__toggle(
             :id='`error-details-${index}`'
             type='checkbox'
@@ -36,26 +37,29 @@
             p(v-for='detail in check.errors') {{detail.message}} at {{detail.dataPath}}
       h3.h5 Passed
       ul.passed-checks
-        li(v-for='check in passed') [✓] {{check.label}}
-    h2 Tipps
-    ul
-      li Supported file formats are RDF/XML, Turtle, N3, RDFa and JSON-LD. Your URL should resolve with one of the following <pre>mimeTypes</pre>:
-        ul
-          li
-            pre application/rdf+xml
-          li
-            pre text/n3
-            span  or 
-            pre application/n3 (legacy)
-          li
-            pre text/turtle
-            span  or 
-            pre application/x-turtle (legacy)
-          li
-            pre application/n-triples
-          li
-            pre application/ld+json
-      li The ontology should have one definition with type <pre>http://www.w3.org/2002/07/owl#Ontology</pre> for the ontology itself and at least one property or class.
+        li(v-for='check in passed')
+          span [✓] 
+          span(v-html="check.label")
+    div.tipps(v-if="!loading && !response")
+      h2 Tipps
+      ul
+        li Supported file formats are RDF/XML, Turtle, N3, RDFa and JSON-LD. Your URL should resolve with one of the following <pre>mimeTypes</pre>:
+          ul
+            li
+              pre application/rdf+xml
+            li
+              pre text/n3
+              span  or 
+              pre application/n3 (legacy)
+            li
+              pre text/turtle
+              span  or 
+              pre application/x-turtle (legacy)
+            li
+              pre application/n-triples
+            li
+              pre application/ld+json
+        li The ontology should have one definition with type <pre>http://www.w3.org/2002/07/owl#Ontology</pre> for the ontology itself and at least one property or class.
 </template>
 
 <script>
@@ -95,11 +99,13 @@ export default {
             url: this.url,
           }),
         });
-        if (!rawResponse.ok) throw Error(res.message);
+        if (!rawResponse.ok) {
+          const error = await rawResponse.text();
+          throw error;
+        }
         const res = await rawResponse.json();
         this.response = res;
       } catch (error) {
-        console.log(error.message);
         this.error = error;
       }
       this.loading = false;
