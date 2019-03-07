@@ -1,5 +1,6 @@
 {
   "ignore": [
-    "refs/*"
+    "refs/*",
+    "src/*"
   ]
 }
