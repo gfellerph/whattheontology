@@ -6082,10 +6082,10 @@ jsonld@^0.4.0, jsonld@^0.4.5:
     request "^2.61.0"
     xmldom "0.1.19"
 
-jsonld@^1.5.3:
-  version "1.5.3"
-  resolved "https://registry.yarnpkg.com/jsonld/-/jsonld-1.5.3.tgz#5814e8040adc075349057b56b2d5e80de23a25ec"
-  integrity sha512-fbgty6qs1UNmzHePUa+4wqZBbjdQN+XNs7bZ1kbp2e/ILIFTDHIuaUH9xrovTcrTfeBc/qbJ0aYpXvYOSRJZxg==
+jsonld@^1.5.4:
+  version "1.5.4"
+  resolved "https://registry.yarnpkg.com/jsonld/-/jsonld-1.5.4.tgz#ac7509cc8180a3ee4235d3dbece55a204617c577"
+  integrity sha512-+cJ5JmXBBlf0zagJDiz1NsnMBQyd4p+LV8x8UQfjCVBhFDcL6hWduDXMUp8XOgLtt8L9LjRCbUj1NL+tU17GqA==
   dependencies:
     rdf-canonize "^1.0.2"
     request "^2.88.0"
@@ -6408,11 +6408,6 @@ lru-cache@^5.1.1:
   integrity sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==
   dependencies:
     yallist "^3.0.2"
-
-lunr@^2.3.5:
-  version "2.3.5"
-  resolved "https://registry.yarnpkg.com/lunr/-/lunr-2.3.5.tgz#7b510bad57e948dfb99a71fdff00c1bf9171bdda"
-  integrity sha512-EtnfmHsHJTr3u24sito9JctSxej5Ds0SgUD2Lm+qRHyLgM7BGesFlW14eNh1mil0fV5Muh8gf3dBBXzADlUlzQ==
 
 make-dir@^1.0.0:
   version "1.3.0"

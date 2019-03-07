@@ -1,6 +1,6 @@
 const elasticsearch = require('elasticsearch');
 const mapper = require('./mapper');
-const fs = require('fs');
+
 const mappings = {
   ontology: {
     mappings: {
@@ -61,10 +61,6 @@ module.exports = async (dataset) => {
     throw new Error(error);
   }
   const mapped = mapper(dataset);
-  const ontology = mapped['@graph'].find((obj) => {
-    return obj['@type'] === 'owl:Ontology' || obj['@type'].includes('owl:Ontology');
-  });
-  if (!ontology) { throw new Error('No ontology found in ' + JSON.stringify(mapped, null, 2))}
   const bulk = mapped['@graph'].reduce((acc, current, index) => {
     // To be a indexable, it must have an id and a type
     if (!current['@id'] || !current['@type']) return acc;
@@ -79,11 +75,10 @@ module.exports = async (dataset) => {
     acc.push(current);
     return acc;
   }, []);
-  fs.writeFileSync(`./refs/elastic/${ontology.label.en}.json`, JSON.stringify(mapped, null, 2));
   const res = await client.bulk({
     body: bulk,
     timeout: '30s'
   });
-  console.log(`Indexed ${mapped['@graph'].length} properties of ${ontology.label.en}`);
+  console.log(`Indexed ${mapped['@graph'].length} properties`);
   return res;
 }

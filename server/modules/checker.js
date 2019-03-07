@@ -8,6 +8,7 @@ const ajv = new Ajv({
   allErrors: true,    // check for all errors
 });
 
+// TODO: maybe run tests async if this is generally supported by ajv
 const tester = (schema, data) => {
   const validator = ajv.compile(schema);
   validator(data);
@@ -20,9 +21,9 @@ const tester = (schema, data) => {
 
 const hasErrors = (err, current) => err || !!current.errors;
 
-const requiredSchemas = Object.values(requireGlob.sync('./schemas/required/*.{js,json}'));
-const warningsSchemas = Object.values(requireGlob.sync('./schema/warnings/*.{js,json}'));
-const recommendedSchemas = Object.values(requireGlob.sync('./schemas/recommended/*.{js,json}'));
+const requiredSchemas = Object.values(requireGlob.sync('../schemas/required/*.{js,json}'));
+const warningsSchemas = Object.values(requireGlob.sync('../schema/warnings/*.{js,json}'));
+const recommendedSchemas = Object.values(requireGlob.sync('../schemas/recommended/*.{js,json}'));
 
 module.exports = (data) => {
   const errors = requiredSchemas.map(schema => tester(schema, data));
