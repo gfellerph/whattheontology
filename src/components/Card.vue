@@ -1,27 +1,21 @@
 <template lang="pug">
   li.card(
-    :style="style"
-    :class="{ deprecated: deprecated }"
   )
     header
-      h2(v-if="card.label") {{card.label}}
-      h2(v-if="card.aclLabel") {{card.aclLabel}}
-      h2(v-if="card.title") {{card.title}}
+      h2 {{hit._source.label.en}}
       p.small
         a.ns-uri(
-          :href="card.uri"
-          v-if="card.isDefinedBy"
-        ) {{card.isDefinedBy.title || card.isDefinedBy}}
+          :href="hit._source['rdfs:isDefinedBy']['@id']"
+          v-if="hit._source['rdfs:isDefinedBy']"
+        ) {{hit._source['rdfs:isDefinedBy']['@id']}}
         span :&nbsp;
         span.italic.lightgrey.uri(
           title="Copy URI"
-          v-clipboard="card.uri"
-        ) {{card.uri}}
+          v-clipboard="hit._source['@id']"
+        ) {{hit._source['@id']}}
     article.box
-      p(v-if="card.comment" v-html="highlightedComment")
-      p(v-if="card.dcElementsDescription") {{card.dcElementsDescription}}
-      p(v-if="card.dcTermsDescription") {{card.dcTermsDescription}}
-      p(v-if="card.note") {{card.note}}
+      p(v-if="hit._source.comment") {{hit._source.comment.en}}
+      p(v-if="hit._source.note") {{hit._source.note.en}}
       p
         type(
           v-for="(type, index) in types"
@@ -32,13 +26,6 @@
 
 <script>
 import Type from '@/components/Type';
-const type = 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type';
-const label = 'http://www.w3.org/2000/01/rdf-schema#label';
-const description = 'http://purl.org/dc/elements/1.1/description';
-const title = 'http://purl.org/dc/elements/1.1/title';
-const comment = 'http://www.w3.org/2000/01/rdf-schema#comment';
-const ontology = 'http://www.w3.org/2002/07/owl#Ontology';
-const owlDeprecated = 'http://www.w3.org/2002/07/owl#deprecated';
 const colorCodes = {
   'http://www.w3.org/1999/02/22-rdf-syntax-ns#Property': {
     color: '#ff5722',
@@ -88,39 +75,31 @@ const colorCodes = {
 export default {
   components: { Type },
   props: {
-    card: Object,
+    hit: Object,
   },
   computed: {
     term() {
-      return this.$route.query.search;
+      return this.$route.query.query;
     },
     // TODO: Fix this
     highlightedComment() {
-      if (!this.term) { return this.card.comment; }
+      if (!this.term) { return this.hit._source.comment.en; }
       const replregx = new RegExp(`${this.term}`, 'gi');
-      return this.card.comment.replace(replregx, `<span class="high">${this.term}</span>`);
-    },
-    style() {
-      if (this.deprecated) { return `border-color: lightgrey;`; }
-      const rdfType = this.card.statements.filter((statement) => statement.predicate === 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type');
-      const color = rdfType.reduce((acc, t) => colorCodes[t.object], {}) || { color: 'lightgrey' };
-      return `border-color:${color.color}`;
+      return this.hit._source.comment.en.replace(replregx, `<span class="high">${this.term}</span>`);
     },
     types() {
-      return this.card.statements
-        .filter((statement) => statement.predicate === type && colorCodes[statement.object])
-        .map((statement) => colorCodes[statement.object]);
+      return typeof this.hit._source['@type'] === 'string'
+        ? [this.hit._source['@type']]
+        : this.hit._source['@type']
     },
     deprecated() {
-      return !!this.card.statements
-        .filter((statement) => statement.predicate === owlDeprecated)
-        .length;
+      return !!this.hit._source['@type'].find('owl:deprecated');
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .card {
     border: 4px solid lightgrey;
     border-radius: 2em;
@@ -168,7 +147,7 @@ export default {
   }
 
   .high {
-    background: lighten($color: lightgreen, $amount: 20);
+    background: PAPAYAWHIP;
   }
 </style>
 

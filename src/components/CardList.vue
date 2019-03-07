@@ -1,12 +1,12 @@
 <template lang="pug">
   ul.card-list
     card(
-      v-for="(card, index) in cards"
+      v-for="(hit, index) in hits"
       :key="index"
-      :card="card"
+      :hit="hit"
     )
-    li(v-if="cards.length === 0 && !loading")
-      h2.lightgrey.italic.blank-slate.center This term does not yet exist (?=
+    li(v-if="hits.length === 0 && !loading")
+      h2.lightgrey.italic.blank-slate.center This term is not indexed yet (?=
 </template>
 
 <script>
@@ -15,9 +15,9 @@ import Card from '@/components/Card';
 export default {
   components: { Card },
   props: {
-    cards: Array,
+    hits: Array,
     loading: Boolean,
-    },
+  },
 }
 </script>
 

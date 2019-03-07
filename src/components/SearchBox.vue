@@ -24,7 +24,7 @@ export default {
   },
   computed: {
     search() {
-      return this.$route.query.search || '';
+      return this.$route.query.query || '';
     }
   },
   methods: {
