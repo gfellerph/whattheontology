@@ -1,6 +1,7 @@
 <template lang="pug">
   nav
     router-link(:to="{ name: 'home' }") search
+    router-link(:to="{ name: 'add' }") add ontology
     router-link(to="/about") about
     a(
       href="https://github.com/tuelsch/whattheontology/issues"

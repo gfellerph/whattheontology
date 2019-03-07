@@ -5,7 +5,7 @@
     router-view
     footer.footer
       p.small.italic.lightgrey.center
-        span Copyright © 2018 Philipp Gfeller, 
+        span created by Philipp Gfeller, 
         span released under the MIT licence, 
         a(href="https://github.com/tuelsch/whattheontology") project on github
 </template>

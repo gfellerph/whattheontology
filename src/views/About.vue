@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import dict from '@/../server/ontology-dictionary.mjs';
+import dict from '@/../server/ontology-dictionary.js';
 
 export default {
   data() {
