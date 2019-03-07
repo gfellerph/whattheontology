@@ -3,6 +3,7 @@ const fastify = require('fastify');
 const compress = require('fastify-compress');
 const fastifyStatic = require('fastify-static');
 const add = require('./plugins/add');
+const search = require('./plugins/search');
 
 /*
   TODO:
@@ -24,6 +25,7 @@ server.register(fastifyStatic, {
 });
 server.register(compress);
 server.register(add);
+server.register(search);
 server.listen(process.env.PORT || 3000, (err, address) => {
   console.log(`Server listening at ${address}`);
 });
