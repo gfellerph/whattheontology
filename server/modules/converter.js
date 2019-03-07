@@ -1,8 +1,8 @@
 const rdflib = require('rdflib');
 
 module.exports = (data, uri, mimeType) => {
-  if (mimeType === 'application/ld+json') {
-    return Promise.resolve(data);
+  if (mimeType.indexOf('application/ld+json') >= 0) {
+    return Promise.resolve(JSON.parse(data));
   }
   return new Promise((resolve, reject) => {
     const store = rdflib.graph()
