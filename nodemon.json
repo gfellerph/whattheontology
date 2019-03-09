@@ -1,6 +1,9 @@
 {
   "ignore": [
     "refs/*",
-    "src/*"
+    "src/*",
+    "dist/*",
+    "public/*",
+    "tests/*"
   ]
 }
