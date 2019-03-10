@@ -1,0 +1,71 @@
+input[type="text"],
+input[type="url"] {
+  display: block;
+  width: 100%;
+  padding: 1rem 2rem;
+  border-radius: 2rem;
+  border: 4px solid lightgrey;
+  transition: border 100ms;
+  font-family: inherit;
+  font-size: inherit;
+
+  &:focus {
+    border-color: dodgerblue;
+    outline: none;
+  }
+}
+
+.input__field {
+  position: relative;
+  margin: 1em auto;
+  display: flex;
+
+  &.has-button {
+    input[type="text"],
+    input[type="url"] {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    button,
+    input[type="button"] {
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+  }
+
+  .hover {
+    position: absolute;
+    display: block;
+    padding: 0 0.25rem;
+    background: white;
+    transform: translateY(-50%);
+    font-size: 0.85em;
+    font-weight: bold;
+    color: lightgrey;
+    top: 0;
+    left: calc(1.75rem + 4px);
+    transition: color 100ms;
+  }
+
+
+  button {
+    background: dodgerblue;
+    color: white;
+
+    span {
+      transform-origin: center center;
+      transition: transform 100ms;
+    }
+
+    &:hover span {
+      transform: scale(1.3);
+    }
+  }
+
+  input:focus{
+    & + label.hover {
+      color: dodgerblue;
+    }
+  } 
+
+}

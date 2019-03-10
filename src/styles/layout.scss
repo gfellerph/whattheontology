@@ -1,0 +1,38 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  // Prevent page jumping between searches
+  overflow-y: scroll;
+  --lightgrey: rgb(180,180,180);
+  --noto-sans: 'Inconsolata', 'Noto Sans SC', Helvetica, Arial, sans-serif;
+  --anthracite: rgb(30,30,30);
+  margin: 0;
+  font-family: var(--noto-sans);
+  letter-spacing: -.00278rem;
+  line-height: 1.6;
+  word-spacing: -0.05rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--anthracite);
+}
+
+#app {
+  margin: 0 1em;
+}
+
+.footer {
+  margin-top: 2em;
+}
+
+.container {
+  max-width: 600px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.box {
+  > *:first-child { margin-top: 0; }
+  > *:last-child { margin-bottom : 0; }
+}

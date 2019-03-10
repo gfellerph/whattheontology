@@ -1,0 +1,20 @@
+.center { text-align: center; }
+.bold { font-weight: bold; }
+.small { font-size: 0.85em; }
+.lightgrey { color: var(--lightgrey); }
+.italic { font-style: italic; }
+.error { color: crimson; }
+.text-align-left { text-align: left; }
+.text-align-center { text-align: center; }
+.text-align-right { text-align: right; }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
