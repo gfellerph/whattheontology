@@ -1,5 +1,4 @@
 const elasticsearch = require('elasticsearch');
-const mapper = require('./mapper');
 
 const mappings = {
   ontology: {
@@ -60,8 +59,8 @@ module.exports = async (dataset) => {
     console.log(error);
     throw new Error(error);
   }
-  const mapped = mapper(dataset);
-  const bulk = mapped['@graph'].reduce((acc, current, index) => {
+  
+  const bulk = dataset['@graph'].reduce((acc, current, index) => {
     // To be a indexable, it must have an id and a type
     if (!current['@id'] || !current['@type']) return acc;
 
@@ -79,6 +78,6 @@ module.exports = async (dataset) => {
     body: bulk,
     timeout: '30s'
   });
-  console.log(`Indexed ${mapped['@graph'].length} properties`);
+  console.log(`Indexed ${dataset['@graph'].length} properties`);
   return res;
 }

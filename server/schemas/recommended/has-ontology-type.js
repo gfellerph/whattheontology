@@ -6,8 +6,8 @@ const localizedString = require('../localizedString');
 module.exports = {
   $schema: 'http://json-schema.org/draft-07/schema#',
   $id: 'http://whattheontology.herokuapp.com/schemas/Ontology_required.json',
-  title: 'Ontology Schema - Required',
-  label: 'Has an Ontology definition. This requires the type "http://www.w3.org/2002/07/owl#Ontology" to be present in the specification. The ontology also needs a title.',
+  title: 'Has an Ontology definition',
+  description: 'This requires the type "http://www.w3.org/2002/07/owl#Ontology" to be present in the specification. The ontology also needs a title.',
 
   definitions: {
     localizedString,

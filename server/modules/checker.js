@@ -9,33 +9,42 @@ const ajv = new Ajv({
 });
 
 // TODO: maybe run tests async if this is generally supported by ajv
-const tester = (schema, data) => {
+const tester = (schema, data, level) => {
   const validator = ajv.compile(schema);
   validator(data);
   return {
     id: schema['$id'],
-    label: schema.label,
+    title: schema.title,
+    description: schema.description,
+    level,
     errors: validator.errors,
   }
 };
 
 const hasErrors = (err, current) => err || !!current.errors;
 
+// Get schemas
 const requiredSchemas = Object.values(requireGlob.sync('../schemas/required/*.{js,json}'));
-const warningsSchemas = Object.values(requireGlob.sync('../schema/warnings/*.{js,json}'));
 const recommendedSchemas = Object.values(requireGlob.sync('../schemas/recommended/*.{js,json}'));
 
 module.exports = (data) => {
-  const errors = requiredSchemas.map(schema => tester(schema, data));
-  const warnings = warningsSchemas.map(schema => tester(schema, data));
-  const recommendations = recommendedSchemas.map(schema => tester(schema, data));
+  // Compile and execute tests
+  const errors = requiredSchemas.map(schema => tester(schema, data, 'required'));
+  const recommendations = recommendedSchemas.map(schema => tester(schema, data, 'recommended'));
+  const checks = [...errors, ...recommendations];
+  let passed = 0;
+  let failed = 0;
+  checks.forEach((check) => {
+    if (check.errors) { failed += 1; } else { passed += 1}
+  });
 
+  // Aggregate return object
   return {
-    errors,
-    warnings,
-    recommendations,
+    totalChecks: checks.length,
+    failed,
+    passed,
+    checks,
     hasErrors: errors.reduce(hasErrors, false),
-    hasWarnings: warnings.reduce(hasErrors, false),
     hasRecommendations: recommendations.reduce(hasErrors, false),
   }
 }

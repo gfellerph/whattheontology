@@ -6,8 +6,8 @@ const propertiesHtml = EProperties.map(prop => `<li>${prop}</li>`).join('');
 module.exports = {
   $schema: 'http://json-schema.org/draft-07/schema#',
   $id: 'http://whattheontology.herokuapp.com/schemas/Property_required.json',
-  title: 'Property Schema - required',
-  label: `Has property definitions. This requires at least one of the following property types to be presend in your specification: <ul>${propertiesHtml}</ul>. Each property also needs a label.`,
+  title: 'Has property definitions',
+  description: `This requires at least one of the following property types to be presend in your specification: <ul>${propertiesHtml}</ul>Each property also needs a label.`,
 
   definitions: {
     localizedString,
