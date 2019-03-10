@@ -6,7 +6,10 @@ module.exports = {
         target: 'http://localhost:3000',
       },
       '/schema': {
-        target: 'http://localhost:3000'
+        target: 'http://localhost:3000',
+      },
+      '/api': {
+        target: 'http://localhost:3000',
       }
     },
   }
