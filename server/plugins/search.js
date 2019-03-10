@@ -30,6 +30,10 @@ module.exports = (server, options, next) => {
 
       res.send(response);
     } catch(error) {
+      if (error.status === 404) {
+        res.status(404);
+        return res.send({ hits: { hits: [] } });
+      }
       throw error;
     }
   });
