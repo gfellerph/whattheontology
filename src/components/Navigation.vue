@@ -1,7 +1,8 @@
 <template lang="pug">
   nav
-    router-link(:to="{ name: 'home' }") search
+    router-link(:to="{ name: 'home' }" exact) search
     router-link(:to="{ name: 'add' }") add ontology
+    img.logo(src="@/assets/logo.png")
     router-link(to="/about") about
     a(
       href="https://github.com/tuelsch/whattheontology/issues"
@@ -9,15 +10,28 @@
 </template>
 
 <style lang="scss" scoped>
+
+  .logo {
+    max-height: 20vh;
+    margin: 0 2rem;
+  }
+  
   nav {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     a {
+      font-weight: bold;
       text-decoration: none;
+      white-space: nowrap;
+      &:before {
+        content: '/';
+      }
 
-      &.router-link-exact-active,
-      &.router-link-active {
+      &.router-link-exact-active {
         color: crimson;
+        text-decoration: underline;
       }
 
       & + a {

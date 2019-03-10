@@ -1,45 +1,29 @@
 <template lang="pug">
   div.add.container
     form
-      label(for='addontology') Enter the URL to your ontology file
-      input(
-        id='addontology'
-        type='url'
-        required
-        v-model='url'
-        ref='addontology'
-        placeholder='http://rdfs.org/sioc/ns#'
-      )
-      button(
-        @click.prevent='add'
-      ) Add to index
-    p.loading(v-if="loading") loading...
-    p.error(v-if="error") {{error.message}}
-    div.result(v-if='response')
-      h2 Result for {{url}}
-      h3.h5 Failed
-      ul.errors
-        li(v-for='(check, index) in errored')
-          span [X] 
-          span(v-html="check.label")
-          input.error-details__toggle(
-            :id='`error-details-${index}`'
-            type='checkbox'
-          )
-          p
-            label.error-details__label(
-              :for='`error-details-${index}`'
-            )
-              span.show Show
-              span.hide Hide
-              span  details
-          div.error-details.hide
-            p(v-for='detail in check.errors') {{detail.message}} at {{detail.dataPath}}
-      h3.h5 Passed
-      ul.passed-checks
-        li(v-for='check in passed')
-          span [✓] 
-          span(v-html="check.label")
+      div.input__field.has-button
+        input(
+          id='addontology'
+          type='url'
+          required
+          v-model='url'
+          ref='addontology'
+          placeholder='http://rdfs.org/sioc/ns#'
+        )
+        label.hover(for='addontology') Enter the URL to your ontology file
+        button(
+          @click.prevent='add'
+        )
+          span Add
+    loading(v-if="loading")
+    div(v-if="error")
+      h2 D'oh!
+      p.error {{error.message}}
+    div(v-if="response")
+      h2 Success!
+      p(v-if="response.indexed") Indexed {{response.elasticResponse.items.length}} properties of {{response.url}} successfully
+      p(v-if="!response.indexed") {{response.message}}
+    reporter(v-if="response" :results="response")
     div.tipps(v-if="!loading && !response")
       h2 Tipps
       ul
@@ -63,8 +47,10 @@
 </template>
 
 <script>
+import Reporter from '@/components/Reporter';
 export default {
   name: 'Add',
+  components: { Reporter },
   data() {
     return {
       url: '',
@@ -72,16 +58,6 @@ export default {
       error: false,
       response: null,
     };
-  },
-  computed: {
-    passed() {
-      if (!this.response) return [];
-      return this.response.errors.filter((check) => !check.errors);
-    },
-    errored() {
-      if (!this.response) return [];
-      return this.response.errors.filter((check) => check.errors);
-    }
   },
   methods: {
     async add() {
@@ -105,8 +81,9 @@ export default {
         }
         const res = await rawResponse.json();
         this.response = res;
+        this.url = '';
       } catch (error) {
-        this.error = error;
+        this.error = JSON.parse(error);
       }
       this.loading = false;
     }
@@ -114,34 +91,10 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   pre {
     background: GAINSBORO;
     display: inline-block;
     padding: 0 0.2em;
-  }
-
-  .hide {
-    display: none;
-  }
-
-  .error-details__label {
-    color: dodgerblue;
-    cursor: pointer;
-  }
-
-  .error-details__toggle {
-    position: absolute;
-    visibility: hidden;
-    &:checked {
-      & ~ .hide,
-      & ~ * .hide {
-        display: initial;
-      }
-      & ~ .show,
-      & ~ * .show {
-        display: none;
-      }
-    }
-  }
+  }  
 </style>

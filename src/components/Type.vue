@@ -33,6 +33,7 @@ export default {
     margin-top: 0.5em;
     font-family: var(--noto-sans);
     overflow: hidden;
+    background-color: var(--lightgrey);
 
     &.property {
       background-color: #ff5722;
