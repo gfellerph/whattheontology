@@ -1,5 +1,4 @@
 const Ajv = require('ajv');
-const jsonld = require('jsonld');
 const LocalizedString = require('../models/LocalizedString');
 const langFields = require('../schemas/ELanguageFields');
 const indexableSchema = require('../schemas/indexable');
@@ -13,16 +12,30 @@ module.exports = async (data) => {
     '@graph': data['@graph']
       .filter((property) => propertyChecker(property))
       .map((property) => {
+        // Dereference id
+        if (!property['@id'].match(/^https?:\/\//)) {
+          const split = property['@id'].split(':');
+          property['@id'] = `${data['@context'][split[0]]}${split[1]}`
+        }
+        
         // Make types always be an array
         property.types = typeof property['@type'] === 'string'
           ? [property['@type']]
           : property['@type'];
 
         Object.keys(property).forEach((field) => {
+          // Add a new language field temporarily
+          if (property[field]['@language']) { langFields.push(field); }
           // Normalize lang fields to localized strings
           if (langFields.includes(field)) {
             const localizedField = new LocalizedString(property[field]);
             property[field] = localizedField.languages;
+          }
+
+          // Delete fields that are links (they are not part of the context)
+          // e.g. unindexable properties
+          if (field.match(/^https?:\/\//)) {
+            delete property[field];
           }
           
           // Declutter properties for more efficient indexing
@@ -36,14 +49,6 @@ module.exports = async (data) => {
         return property;
       }),
   });
-
-  // Dereference ids and types so we always have an
-  // absolute URI ID
-  const expanded = await jsonld.expand(mappedData);
-  const assignedGraph = mappedData['@graph'].map((indexable, index) => {
-    return Object.assign({}, indexable, expanded[index]);
-  });
-  mappedData['@graph'] = assignedGraph;
 
   return mappedData;
 }
