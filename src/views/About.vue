@@ -30,7 +30,7 @@
         span(v-if="ont.error") [X] 
         span(v-else) [✓] 
         a(:href="ont.url")
-          span {{ont.name || ont.url}}
+          span {{ont.prefix}} - {{ont.name || ont.url}}
         span(v-if="ont.error")  ({{ont.error.message}})
 
 </template>

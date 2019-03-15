@@ -35,5 +35,11 @@ module.exports = {
   ],
   inverseOf: [
     'owl:inverseOf'
+  ],
+  seeAlso: [
+    'rdfs:seeAlso'
+  ],
+  creator: [
+    
   ]
 }

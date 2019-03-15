@@ -11,4 +11,10 @@ module.exports = {
   "cc": "https://creativecommons.org/",
   "skos": "http://www.w3.org/2004/02/skos/core#",
   "schema": "http://schema.org/",
+
+  // Make types always be an array
+  /* "types": {
+    "@id": "@type",
+    "@container": "@set"
+  } */
 }

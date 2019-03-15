@@ -6,4 +6,5 @@ module.exports = [
   'rdfs:label',
   'rdfs:comment',
   'skos:note',
+  'owl:versionInfo'
 ];

@@ -15,7 +15,7 @@
         ) {{hit._source['@id']}}
     article.box
       p(v-if="hit._source.comment" v-html="hit._source.comment.en")
-      p(v-if="hit._source.note" v-html="hit._source.not.en")
+      p(v-if="hit._source.note" v-html="hit._source.note.en")
       p
         type(
           v-for="(type, index) in hit._source.types"

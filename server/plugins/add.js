@@ -5,18 +5,10 @@ const loader = require('../modules/loader');
 const checker = require('../modules/checker');
 const converter = require('../modules/converter');
 const indexer = require('../modules/indexer');
-const logger = require('../modules/logger');
 const mapper = require('../modules/mapper');
+const informer = require('../modules/informer');
 const OntologyLogger = require('../mongodb/schemas/Ontology.schema');
-
-const findOntologyName = (graph) => {
-  const ontology = graph.find((o) => o['@type'] === 'owl:Ontology' || o['@type'].includes('@type'));
-  return ontology && ontology.label ? ontology.label.en : '';
-}
-
-/* OntologyLogger.deleteMany({}).then(() => {
-  console.log('removed all db entries')
-}); */
+const fs = require('fs');
 
 module.exports = function(server, options, next) {
   server.post('/schema', {
@@ -24,15 +16,13 @@ module.exports = function(server, options, next) {
   }, async (req, res) => {
     let log;
     try {
-      // Fetching step
-      const request = await loader(req.body.url);
-      const rawData = await request.text();
-
       // Existence check
-      log = await OntologyLogger.findOne({ url: req.body.url });
+      log = await OntologyLogger.findOne({
+        url: req.body.url
+      });
       if (!log) {
         log = new OntologyLogger({ url: req.body.url });
-      } else if(!log.error) {
+      } else if(log.indexed) {
         // This has already been successfully indexed
         return res.send({
           message: 'This ontology has already been successfully indexed, thank you for submitting.',
@@ -41,15 +31,33 @@ module.exports = function(server, options, next) {
         });
       }
       
+      // Fetching step
+      const request = await loader(req.body.url);
+      const rawData = await request.text();
+      const infos = await informer(req.body.url)
+        .catch(() => {});
+      
+
+      if (infos) {
+        log.name = infos.titles.find(t => t.lang === 'en').value;
+        log.prefix = infos.prefix;
+        log.homepage = infos.homepage;
+      }
+      
       // Conversion step
       const mimeType = request.headers.get('content-type');
       const jsonldData = await converter(rawData, req.body.url, mimeType);
       const flatted = await jsonld.flatten(jsonldData);
       const compacted = await jsonld.compact(jsonldData, context);
+      fs.writeFileSync('./refs/latestjsonData.json', JSON.stringify(jsonldData, null, 2));
+      fs.writeFileSync('./refs/latestflatted.json', JSON.stringify(flatted, null, 2));
+      fs.writeFileSync('./refs/latestcompacted.json', JSON.stringify(compacted, null, 2));
       
       // Validation step
       const validation = checker(flatted);
       if (validation.hasErrors) {
+        log.setError = new Error('Validation failed');
+        log.save();
         res.status = 500;
         return res.send({
           message: 'Ontology contains errors',
@@ -60,8 +68,11 @@ module.exports = function(server, options, next) {
       
       // Indexing step
       const mapped = await mapper(compacted);
+      fs.writeFileSync('./refs/latestmapped.json', JSON.stringify(mapped, null, 2));
       const elasticResponse = await indexer(mapped);
       if (elasticResponse.errors) {
+        log.setError = new Error('Indexing error');
+        log.save();
         res.status = 500;
         return res.send({
           message: 'Could not index ontology due to errors (see below)',
@@ -72,10 +83,9 @@ module.exports = function(server, options, next) {
       }
 
       // Indexing successful
-      log.name = findOntologyName(mapped['@graph']);
-      log.error = null;
-      log.markModified('error');
-      await log.save();
+      log.setError = null;
+      log.indexed = true;
+      log.save();
 
       res.send({
         message: 'Ontology looks good',
@@ -87,7 +97,6 @@ module.exports = function(server, options, next) {
     } catch(error) {
       if (!log) log = new OntologyLogger({ url: req.body.url });
       log.setError = error;
-      log.markModified('error');
       await log.save(); 
 
       // If anything fails, throw the error to the client

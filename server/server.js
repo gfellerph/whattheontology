@@ -6,6 +6,7 @@ const add = require('./plugins/add');
 const search = require('./plugins/search');
 const mongoose = require('./plugins/mongoose');
 const ontology = require('./plugins/ontologies');
+const tools = require('./plugins/tools');
 
 /*
   TODO:
@@ -28,6 +29,7 @@ server.register(mongoose);
 server.register(add);
 server.register(search);
 server.register(ontology);
+server.register(tools);
 server.listen(process.env.PORT || 3000, (err, address) => {
   console.log(`Server listening at ${address}`);
 });
