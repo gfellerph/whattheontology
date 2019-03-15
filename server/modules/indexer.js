@@ -10,6 +10,10 @@ const mappings = {
               en: {
                 type: 'text',
                 analyzer: 'english'
+              },
+              fr: {
+                type: 'text',
+                analyzer: 'french'
               }
             }
           },
@@ -40,9 +44,6 @@ const options = {
 
 const client = elasticsearch.Client(options);
 
-/* client.indices.delete({ index: 'ontology' }).then(() => {
-  console.log('index deleted');
-}); */
 module.exports = async (dataset) => {
   try {
     if (!await client.indices.exists({ index: 'ontology' })) {
