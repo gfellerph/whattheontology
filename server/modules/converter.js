@@ -1,4 +1,6 @@
 const rdflib = require('rdflib');
+const jsonld = require('jsonld');
+const fs = require('fs');
 
 const acceptedTypes = [
   'application/ld+json',
@@ -32,11 +34,29 @@ module.exports = (data, uri, mimeType = 'application/rdf+xml') => {
 
   // Parse with rdflib and serialize to json-ld
   return new Promise((resolve, reject) => {
-    const store = rdflib.graph()
-    rdflib.parse(data, store, uri, parsedMimeType)
-    rdflib.serialize(null, store, uri, 'application/ld+json', (err, jsonldData) => {
+    const store = rdflib.graph();
+    rdflib.parse(data, store, uri, parsedMimeType);
+    rdflib.serialize(null, store, uri, 'application/n-quads', async (err, nquads) => {
       if (err) return reject(err);
-      resolve(JSON.parse(jsonldData))
+
+      // Handle worrysome long strings with """ and line breaks
+      try {
+        let parsedNQuads = nquads.replace(/"""([\s\S]*?)"""/g, (m, g) => {
+          return '"' + g
+            .replace(/\n/g, '\\n')
+            .replace(/\t/g, '\\t')
+            .replace(/\r/g, '\\r')
+            .replace(/"/g, '\\"') + '"';
+        });
+        
+        const jsonldData = await jsonld.fromRDF(parsedNQuads, { format: 'application/n-quads' })
+        // Remove any list/rest entries noise, these confuse the jsonld parser
+        const filtered = jsonldData.filter(data => data['@graph'] && data['@id']);
+        
+        resolve(filtered);
+      } catch(error) {
+        reject(error);
+      }
     });
   });
 };
