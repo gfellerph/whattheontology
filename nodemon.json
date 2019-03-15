@@ -4,6 +4,7 @@
     "src/*",
     "dist/*",
     "public/*",
-    "tests/*"
+    "tests/*",
+    "test.js"
   ]
 }
