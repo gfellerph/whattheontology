@@ -32,8 +32,7 @@ module.exports = function(server, options, next) {
       }
       
       // Fetching step
-      const request = await loader(req.body.url);
-      const rawData = await request.text();
+      const store = await loader(req.body.url);
       const infos = await informer(req.body.url)
         .catch(() => {});
       
@@ -45,8 +44,7 @@ module.exports = function(server, options, next) {
       }
       
       // Conversion step
-      const mimeType = request.headers.get('content-type');
-      const jsonldData = await converter(rawData, req.body.url, mimeType);
+      const jsonldData = await converter(store, req.body.url);
       const flatted = await jsonld.flatten(jsonldData);
       const compacted = await jsonld.compact(jsonldData, context);
       fs.writeFileSync('./refs/latestjsonData.json', JSON.stringify(jsonldData, null, 2));
