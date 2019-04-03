@@ -29,6 +29,7 @@
         content: '/';
       }
 
+      &.router-link-active,
       &.router-link-exact-active {
         color: crimson;
         text-decoration: underline;

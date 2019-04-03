@@ -1,5 +1,7 @@
 input[type="text"],
-input[type="url"] {
+input[type="url"],
+textarea,
+select {
   display: block;
   width: 100%;
   padding: 1rem 2rem;
@@ -22,7 +24,9 @@ input[type="url"] {
 
   &.has-button {
     input[type="text"],
-    input[type="url"] {
+    input[type="url"],
+    textarea,
+    select {
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
     }
@@ -62,10 +66,11 @@ input[type="url"] {
     }
   }
 
-  input:focus{
+  input:focus,
+  textarea:focus,
+  select:focus {
     & + label.hover {
       color: dodgerblue;
     }
-  } 
-
+  }
 }

@@ -1,9 +1,13 @@
 <template lang="pug">
   div.reporter
+    h2(v-if="!results.failed") Success!
+    h2(v-if="results.failed") Fail!
+    p(v-if="results.indexed") Indexed {{results.elasticResponse.items.length}} properties of {{results.url}} successfully
+    p(v-if="!results.indexed") {{results.message}}
     collapsible(
       v-if="results.failed"
       :initiallyOpen="true"
-    )    
+    )
       h3.h5(slot="header") Failed {{results.failed}} of {{results.totalChecks}} checks
       ul.errors
         li(

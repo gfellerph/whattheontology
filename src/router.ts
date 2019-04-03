@@ -24,7 +24,20 @@ export default new Router({
     {
       path: '/add',
       name: 'add',
+      redirect: '/add/url',
       component: () => import('./views/Add.vue'),
+      children: [
+        {
+          path: 'url',
+          name: 'addByUrl',
+          component: () => import('./views/add/Url.vue'),
+        },
+        {
+          path: 'text',
+          name: 'addByText',
+          component: () => import('./views/add/Text.vue'),
+        },
+      ],
     },
   ],
 });
