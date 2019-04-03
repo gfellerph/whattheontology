@@ -17,12 +17,11 @@ module.exports = (server, options, next) => {
     try {
       const response = await client.search({
         index: 'ontology',
-        // type: 'properties',
         body: {
           query:{
             multi_match:{
               query: req.body.query,
-              fields: ["label.en^3","comment.en^2","note.en"]
+              fields: ["label.en^2","comment.en"]
             },
           },
         },

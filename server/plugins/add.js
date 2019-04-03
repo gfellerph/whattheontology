@@ -12,7 +12,12 @@ const fs = require('fs');
 
 module.exports = function(server, options, next) {
   server.post('/schema', {
-    schema: { body: { type: 'object', properties: { url: UrlSchema }}},
+    schema: { body: {
+      type: 'object',
+      required: ['url'],
+      properties: { url: UrlSchema },
+      additionalProperties: false,
+    }},
   }, async (req, res) => {
     let log;
     try {
