@@ -22,6 +22,7 @@
     "fastify-static": "^1.1.0",
     "iso-639-1": "^2.0.3",
     "jsonld": "^1.5.4",
+    "mime-types": "^2.1.22",
     "mongoose": "^5.4.18",
     "node-fetch": "^2.3.0",
     "rdflib": "^0.20.0",

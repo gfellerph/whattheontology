@@ -1,7 +1,8 @@
-import solid from 'solid-file-client/dist/browser/solid-file-client.bundle';
+
 import ISession from '@/@types/ISession';
 import { Module } from 'vuex';
 import { SOLID_COMMUNITY_IDP, SOLID_AUTH_POPUP_URI } from '@/modules/constants';
+const solid = SolidFileClient;
 
 interface IAuthState {
   session: ISession | null;
@@ -53,9 +54,7 @@ export const auth: Module<IAuthState, {}> = {
     },
     POPUP_LOGIN({ commit }) {
       // Use the popup to log in
-      return solid.popupLogin({
-        popupUri: SOLID_AUTH_POPUP_URI,
-      })
+      return solid.popupLogin()
         .then((session: ISession) => {
           if (session) {
             commit('LOGIN', session);

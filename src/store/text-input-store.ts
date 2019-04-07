@@ -1,6 +1,5 @@
 import { Module } from 'vuex';
 import fetchJson from '@/modules/fetch-json';
-import solidFileClient from 'solid-file-client/dist/browser/solid-file-client.bundle';
 
 enum ERdfTypes {
   JSONLD = 'application/ld+json',
@@ -25,15 +24,20 @@ interface ITextState {
   loading: boolean;
   error: string | false;
   uploadUrl: string;
+  uploadResponse: {} | null;
+  indexResponse: {} | null;
 }
 
 const textInputState: ITextState = {
-  text: '',
+  // tslint:disable-next-line:max-line-length
+  text: '@prefix owl: <http://www.w3.org/2002/07/owl#>. @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>. @prefix dcterms: <http://purl.org/dc/terms/>. : a owl:Ontology; dcterms:title "Test"@en; dcterms:description "A test ontology."@en. :Test a owl:Class; rdfs:label "Test Class"@en. :test a owl:ObjectProperty; rdfs:label "Test property"@en.',
   rdfType: ERdfTypes.TURTLE,
   response: null,
   loading: false,
   error: false,
   uploadUrl: '',
+  uploadResponse: null,
+  indexResponse: null,
 };
 
 export const textInput: Module<ITextState, {}> = {
@@ -62,6 +66,24 @@ export const textInput: Module<ITextState, {}> = {
       state.error = false;
       state.response = response;
     },
+    UPLOAD_ERROR(state, error: string) {
+      state.error = error;
+      state.loading = false;
+    },
+    UPLOAD_SUCCESS(state, response) {
+      state.error = false;
+      state.loading = false;
+      state.uploadResponse = response;
+    },
+    INDEX_ERROR(state, error: string) {
+      state.error = error;
+      state.loading = false;
+    },
+    INDEX_SUCCESS(state, response) {
+      state.error = false;
+      state.loading = false;
+      state.indexResponse = response;
+    },
   },
   actions: {
     async CHECK_ONTOLOGY({ state, commit }) {
@@ -81,8 +103,25 @@ export const textInput: Module<ITextState, {}> = {
       }
     },
     async UPLOAD_ONTOLOGY({ state, commit, getters }) {
-      const contents = await solidFileClient.readFolder(getters.origin);
-      console.log(contents);
+      try {
+        const response = await SolidFileClient.updateFile(state.uploadUrl, state.text);
+        commit('UPLOAD_SUCCESS', response);
+      } catch (error) {
+        commit('UPLOAD_ERROR', error.message);
+      }
+    },
+    async INDEX_ONTOLOGY({ state, commit }) {
+      try {
+        const response = await fetchJson({
+          url: '/schema',
+          method: 'POST',
+          body: {
+            url: state.uploadUrl,
+          },
+        });
+      } catch (error) {
+
+      }
     },
   },
 };

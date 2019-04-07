@@ -11,6 +11,7 @@
     select-upload-location(v-if="response && authenticated")
 
     h2 4. Indexing your ontology
+    index-ontology
 </template>
 
 <script>
@@ -18,12 +19,14 @@ import EMimeTypes from '@/../server/schemas/EMimeTypes';
 import Reporter from '@/components/Reporter';
 import SolidLogin from '@/components/SolidLogin';
 import OntologyTextInput from '@/components/OntologyTextInput';
+import IndexOntology from '@/components/IndexOntology';
 import SelectUploadLocation from '@/components/SelectUploadLocation';
 import { mapState, mapGetters } from 'vuex';
 
 export default {
   components: {
     Reporter,
+    IndexOntology,
     SolidLogin,
     OntologyTextInput,
     SelectUploadLocation,
