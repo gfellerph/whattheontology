@@ -22,7 +22,7 @@
       label.hover(for="choosemimetype") Select the mime type for your input
     p.text-align-right
       button.small(
-        :disabled="!text"
+        :disabled="!text || check.loading"
         @click.prevent="CHECK_ONTOLOGY"
       ) Check
 </template>
@@ -39,6 +39,7 @@ export default {
   computed: mapState({
     text: state => state.textInput.text,
     rdfType: state => state.textInput.rdfType,
+    check: state => state.textInput.check,
   }),
   mounted() {
     this.$refs.textinput.focus();
@@ -58,5 +59,8 @@ export default {
 </script>
 
 <style>
-
+  textarea {
+    min-height: 50vh;
+    resize: vertical;
+  }
 </style>

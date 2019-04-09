@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from './views/Home.vue';
+import Home from '@/views/Home.vue';
+import store from '@/store';
 
 Vue.use(Router);
 
@@ -36,6 +37,28 @@ export default new Router({
           path: 'text',
           name: 'addByText',
           component: () => import('./views/add/Text.vue'),
+          redirect: (to) => {
+            if (store.getters.canIndex) { return `${to.fullPath}/index`; }
+            if (store.getters.canUpload) { return `${to.fullPath}/upload`; }
+            return `${to.fullPath}/check`;
+          },
+          children: [
+            {
+              path: 'check',
+              name: 'Check',
+              component: () => import('@/views/add/text/Check.vue'),
+            },
+            {
+              path: 'upload',
+              name: 'Upload',
+              component: () => import('@/views/add/text/Upload.vue'),
+            },
+            {
+              path: 'index',
+              name: 'Index',
+              component: () => import('@/views/add/text/Index.vue'),
+            },
+          ],
         },
       ],
     },

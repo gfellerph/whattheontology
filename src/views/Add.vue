@@ -15,7 +15,6 @@ export default {
 <style lang="scss">
   .tabs {
     border-bottom: 1px solid lightgrey;
-    margin: 1em 0;
 
     a {
       display: inline-block;

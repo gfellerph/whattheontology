@@ -2,44 +2,27 @@
   div.select-location
     solid-folder-selector(
       :origin="origin"
-      v-model="selectedFolder"
+      @change="SET_FOLDER_PATH"
     )
     div.input__field
-      label(for="ontologyfilename") Filename of your ontology
-    div.select-location__filename
-      span {{selectedFolder}}
-      input(
-        id="ontologyfilename"
-        type="text"
-        v-model="filename"
-      )
-      span .{{fileEnding}}
-    p Your live url: 
-      span.live-url(v-clipboard="liveLink" title="Copy to clipboard") {{liveLink}}
-    p.text-align-right
-      button.small(
-        :disabled="!(filename && selectedFolder)"
-        @click="upload"
-      ) Upload
-    div.upload-success(v-if="uploadResponse")
-      h2 Upload Success
-      p
-        span Your ontology is online at 
-        a(:href="liveLink" target="_blank") {{liveLink}}
+      div.select-location__filename.input
+        span.select-location__origin {{folderpath}}
+        input(
+          id="ontologyfilename"
+          type="text"
+          :value="filename"
+          @input="setFileName"
+        )
+        span .{{fileEnding}}
+        label.hover(for="ontologyfilename") Filename of your ontology
 </template>
 
 <script>
 import mimeTypes from 'mime-types';
-import { mapState, mapActions, mapGetters } from 'vuex';
+import { mapState, mapMutations, mapActions, mapGetters } from 'vuex';
 import SolidFolderSelector from '@/components/SolidFolderSelector';
 
 export default {
-  data() {
-    return {
-      selectedFolder: '',
-      filename: '',
-    }
-  },
   components: {
     SolidFolderSelector,
   },
@@ -47,26 +30,25 @@ export default {
     ...mapState({
       url: state => state.textInput.uploadUrl,
       rdfType: state => state.textInput.rdfType,
-      uploadResponse: state => state.textInput.uploadResponse,
+      filename: state => state.textInput.fileName,
+      folderpath: state => state.textInput.folderPath,
     }),
     ...mapGetters([
-      'origin'
+      'origin',
+      'canIndex',
     ]),
-    liveLink() {
-      return `${this.selectedFolder}${this.filename}.${this.fileEnding}`;
-    },
     fileEnding() {
       return mimeTypes.extension(this.rdfType);
     }
   },
   methods: {
-    upload(event) {
-      this.$store.commit('SET_UPLOAD_URL', this.liveLink);
-      this.UPLOAD_ONTOLOGY();
-    },
-    ...mapActions([
-      'UPLOAD_ONTOLOGY',
+    ...mapMutations([
+      'SET_FOLDER_PATH',
+      'SET_FILENAME',
     ]),
+    setFileName(event) {
+      this.SET_FILENAME(event.target.value);
+    },
   },
 }
 </script>
@@ -75,6 +57,8 @@ export default {
   .select-location {
     &__filename {
       display: flex;
+      justify-content: flex-end;
+      overflow: hidden;
 
       span {
         white-space: nowrap;
@@ -84,6 +68,7 @@ export default {
         border-radius: 0;
         border: 1px solid black;
         padding: 0.125em 0.5em;
+        min-width: 8em;
       }
     }
   }

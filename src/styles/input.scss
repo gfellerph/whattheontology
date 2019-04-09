@@ -1,7 +1,8 @@
 input[type="text"],
 input[type="url"],
 textarea,
-select {
+select,
+.input {
   display: block;
   width: 100%;
   padding: 1rem 2rem;
@@ -19,7 +20,7 @@ select {
 
 .input__field {
   position: relative;
-  margin: 1em auto;
+  margin: 2em auto;
   display: flex;
 
   &.has-button {

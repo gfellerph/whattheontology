@@ -12,7 +12,7 @@
 <style lang="scss" scoped>
 
   .logo {
-    max-height: 20vh;
+    max-height: 6em;
     margin: 0 2rem;
   }
   

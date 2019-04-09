@@ -1,4 +1,5 @@
 import { Module } from 'vuex';
+import mimeTypes from 'mime-types';
 import fetchJson from '@/modules/fetch-json';
 
 enum ERdfTypes {
@@ -13,34 +14,43 @@ enum ERdfTypes {
   TURTLE = 'text/turtle',
 }
 
-interface ICheckResult {
+type TAPIError = string | false;
+interface IAPIRequest<TResponse = any> {
+  loading: boolean;
+  error: TAPIError;
+  response: TResponse | null;
+}
 
+class APIRequest<TResponse = any> implements IAPIRequest {
+  public loading: boolean = false;
+  public error: TAPIError = false;
+  public response: TResponse | null = null;
 }
 
 interface ITextState {
   text: string;
   rdfType: ERdfTypes;
-  response: ICheckResult | null;
-  loading: boolean;
-  error: string | false;
+  folderPath: string;
+  fileName: string;
+  check: APIRequest;
+  upload: APIRequest;
+  index: APIRequest;
   uploadUrl: string;
-  uploadResponse: {} | null;
-  indexResponse: {} | null;
 }
 
 const textInputState: ITextState = {
   // tslint:disable-next-line:max-line-length
   text: '@prefix owl: <http://www.w3.org/2002/07/owl#>. @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>. @prefix dcterms: <http://purl.org/dc/terms/>. : a owl:Ontology; dcterms:title "Test"@en; dcterms:description "A test ontology."@en. :Test a owl:Class; rdfs:label "Test Class"@en. :test a owl:ObjectProperty; rdfs:label "Test property"@en.',
   rdfType: ERdfTypes.TURTLE,
-  response: null,
-  loading: false,
-  error: false,
+  fileName: '',
+  folderPath: '',
+  check: new APIRequest(),
+  upload: new APIRequest(),
+  index: new APIRequest(),
   uploadUrl: '',
-  uploadResponse: null,
-  indexResponse: null,
 };
 
-export const textInput: Module<ITextState, {}> = {
+export const textInput: Module<ITextState, any> = {
   state: textInputState,
   mutations: {
     SET_TEXT(state, text: string) {
@@ -49,45 +59,52 @@ export const textInput: Module<ITextState, {}> = {
     SET_TYPE(state, rdfType: ERdfTypes) {
       state.rdfType = rdfType;
     },
+    SET_FOLDER_PATH(state, path: string) {
+      state.folderPath = path;
+    },
+    SET_FILENAME(state, filename: string) {
+      state.fileName = filename;
+    },
     SET_UPLOAD_URL(state, url: string) {
       state.uploadUrl = url;
     },
-    BEFORE_CHECK(state) {
-      state.loading = true;
-      state.error = false;
-      state.response = null;
+    BEFORE_REQUEST(state, request: string) {
+      state[request].loading = true;
+      state[request].error = false;
+      state[request].response = null;
     },
-    CHECK_ERROR(state, error: string) {
-      state.error = error;
-      state.loading = false;
+    REQUEST_SUCCESS(state, payload: { request: string, response: {}}) {
+      state[payload.request].loading = false;
+      state[payload.request].response = payload.response;
     },
-    CHECK_SUCCESS(state, response: ICheckResult) {
-      state.loading = false;
-      state.error = false;
-      state.response = response;
+    REQUEST_ERROR(state, payload: { request: string, error: string }) {
+      state[payload.request].error = payload.error;
+      state[payload.request].loading = false;
     },
-    UPLOAD_ERROR(state, error: string) {
-      state.error = error;
-      state.loading = false;
+  },
+  getters: {
+    checkSuccessful(state) {
+      return state.check.response && !state.check.response.hasErrors;
     },
-    UPLOAD_SUCCESS(state, response) {
-      state.error = false;
-      state.loading = false;
-      state.uploadResponse = response;
+    canUpload(state, getters) {
+      return getters.checkSuccessful
+        && state.fileName
+        && state.folderPath;
     },
-    INDEX_ERROR(state, error: string) {
-      state.error = error;
-      state.loading = false;
+    canIndex(state, getters) {
+      return getters.canUpload
+        && state.upload.response
+        && getters.uploadUrl;
     },
-    INDEX_SUCCESS(state, response) {
-      state.error = false;
-      state.loading = false;
-      state.indexResponse = response;
+    uploadUrl(state) {
+      if (!state.fileName || !state.folderPath) { return null; }
+      const extension = mimeTypes.extension(state.rdfType);
+      return `${state.folderPath}${state.fileName}.${extension}`;
     },
   },
   actions: {
     async CHECK_ONTOLOGY({ state, commit }) {
-      commit('BEFORE_CHECK');
+      commit('BEFORE_REQUEST', 'check');
       try {
         const response = await fetchJson({
           url: '/api/check/text',
@@ -97,30 +114,33 @@ export const textInput: Module<ITextState, {}> = {
             mimeType: state.rdfType,
           },
         });
-        commit('CHECK_SUCCESS', response);
+        commit('REQUEST_SUCCESS', { request: 'check', response });
       } catch (error) {
-        commit('CHECK_ERROR', error.message);
+        commit('REQUEST_ERROR', { request: 'check', error: error.message });
       }
     },
     async UPLOAD_ONTOLOGY({ state, commit, getters }) {
+      commit('BEFORE_REQUEST', 'upload');
       try {
-        const response = await SolidFileClient.updateFile(state.uploadUrl, state.text);
-        commit('UPLOAD_SUCCESS', response);
+        const response = await SolidFileClient.updateFile(getters.uploadUrl, state.text);
+        commit('REQUEST_SUCCESS', { request: 'upload', response });
       } catch (error) {
-        commit('UPLOAD_ERROR', error.message);
+        commit('REQUEST_ERROR', { request: 'upload', error: error.message });
       }
     },
-    async INDEX_ONTOLOGY({ state, commit }) {
+    async INDEX_ONTOLOGY({ state, commit, getters }) {
+      commit('BEFORE_REQUEST', 'index');
       try {
         const response = await fetchJson({
           url: '/schema',
           method: 'POST',
           body: {
-            url: state.uploadUrl,
+            url: getters.uploadUrl,
           },
         });
+        commit('REQUEST_SUCCESS', { request: 'index', response });
       } catch (error) {
-
+        commit('REQUEST_ERROR', { request: 'index', error: error.message });
       }
     },
   },

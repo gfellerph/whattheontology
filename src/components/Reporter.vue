@@ -1,15 +1,16 @@
 <template lang="pug">
   div.reporter
-    h2(v-if="!results.failed") Success!
-    h2(v-if="results.failed") Fail!
+    h2
+      span(v-if="results.hasErrors") Ontology contains errors
+      span(v-else) Ontology looks good
+      span(v-if="results.hasRecommendations") , but has recommendations
     p(v-if="results.indexed") Indexed {{results.elasticResponse.items.length}} properties of {{results.url}} successfully
-    p(v-if="!results.indexed") {{results.message}}
     collapsible(
       v-if="results.failed"
       :initiallyOpen="true"
     )
       h3.h5(slot="header") Failed {{results.failed}} of {{results.totalChecks}} checks
-      ul.errors
+      ul.errors.reporter__list
         li(
           v-for='(check, index) in failedChecks'
           :key="index"
@@ -29,7 +30,7 @@
                 ) {{detail.message}} at {{detail.dataPath}}
     collapsible(v-if="results.passed")
       h3.h5(slot="header") Passed {{results.passed}} of {{results.totalChecks}} checks
-      ul
+      ul.reporter__list
         li(
           v-for="check, index in passedChecks"
           :key="index"
@@ -78,6 +79,10 @@ export default {
         content: '[+]';
       }
     }
+  }
+
+  .reporter__list {
+    list-style: none;
   }
 
   .error-details {

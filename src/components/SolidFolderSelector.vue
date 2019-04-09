@@ -75,9 +75,11 @@ export default {
   model: {
     event: 'change',
   },
+  created() {
+    document.addEventListener('keydown', this.deleteFolder, false);
+  },
   mounted() {
     this.loadFolder(this.origin);
-    document.addEventListener('keydown', this.deleteFolder, false);
   },
   beforeDestroyed() {
     document.removeEventListener('keydown', this.deleteFolder);
@@ -131,7 +133,7 @@ export default {
       this.loading = false;
     },
     async deleteFolder(event) {
-      if (event.key && event.key.toLowerCase() !== 'delete') return;
+      if (!event.key || event.key.toLowerCase() !== 'delete') return;
       if (!this.selectedUrl) return;
       this.deleteFolderError = false;
       const url = this.selectedUrl;
@@ -140,7 +142,7 @@ export default {
       try {
         await fileClient.deleteFolder(url);
         this.folders = this.folders.filter((folder) => folder.url !== url);
-        this.selectedUrl = this.folderPath[this.folderPath.length - 1].url;
+        this.selectedUrl = this.folderPath[this.folderPath.length - 1].url || this.origin;
       } catch (error) {
         console.error('Cant delete', error);
         this.deleteFolderError = error.message;
@@ -159,6 +161,7 @@ export default {
     border-radius: 2rem;
     border: 4px solid dodgerblue;
     overflow: hidden;
+    margin: 2em auto;
 
     & > *:first-child {
       margin-top: 0;
@@ -227,7 +230,6 @@ export default {
 
     &__controls {
       background: lightgrey;
-      border-top: 1px solid grey;
       padding: 0.5em 1em;
 
       button {
