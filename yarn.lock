@@ -4027,13 +4027,13 @@ fast-safe-stringify@^1.0.8, fast-safe-stringify@^1.2.3:
   resolved "https://registry.yarnpkg.com/fast-safe-stringify/-/fast-safe-stringify-1.2.3.tgz#9fe22c37fb2f7f86f06b8f004377dbf8f1ee7bc1"
   integrity sha512-QJYT/i0QYoiZBQ71ivxdyTqkwKkQ0oxACXHYxH2zYHJEgzi2LsbjgvtzTbLi1SZcF190Db2YP7I7eTsU2egOlw==
 
-fastify-compress@^0.8.1:
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/fastify-compress/-/fastify-compress-0.8.1.tgz#fd5082f259881e9dbd900e999e3240d2e6dad2b1"
-  integrity sha512-QQ4xTZB71unGzDV7n5K/Nid9+x643MtHFLS7klWBqpzRzbIGYgolvKZB+yn6Q0Pa8/p4U01hedVKd4puEU6rxw==
+fastify-compress@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/fastify-compress/-/fastify-compress-0.9.0.tgz#636109e380a98cdd2f8539ca5f6dfcb982f53ae9"
+  integrity sha512-crcrwKknhm6DNgUCRZ17PuLGO33pgoMGijgNzEQnOGWTE6unkCKmV3iA2sdU0Fq8WajAkTZtTLpokhoUonGOnA==
   dependencies:
     fastify-plugin "^1.0.0"
-    into-stream "^4.0.0"
+    into-stream "4.0.0"
     is-deflate "^1.0.0"
     is-gzip "^1.0.0"
     is-stream "^1.1.0"
@@ -5067,7 +5067,7 @@ internal-ip@^3.0.1:
     default-gateway "^2.6.0"
     ipaddr.js "^1.5.2"
 
-into-stream@^4.0.0:
+into-stream@4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/into-stream/-/into-stream-4.0.0.tgz#ef10ee2ffb6f78af34c93194bbdc36c35f7d8a9d"
   integrity sha512-i29KNyE5r0Y/UQzcQ0IbZO1MYJ53Jn0EcFRZPj5FzWKYH17kDFEOwuA+3jroymOI06SW1dEDnly9A1CAreC5dg==
