@@ -18,7 +18,7 @@
     "fastify": "^1.13.0",
     "fastify-compress": "^0.8.1",
     "fastify-compression": "^1.1.0",
-    "fastify-static": "^1.1.0",
+    "fastify-static": "^2.3.4",
     "lunr": "^2.3.5",
     "rdflib": "^0.20.0",
     "register-service-worker": "^1.0.0",
