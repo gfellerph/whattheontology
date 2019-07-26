@@ -20,7 +20,7 @@
     "fastify-compression": "^1.1.0",
     "fastify-static": "^1.1.0",
     "lunr": "^2.3.5",
-    "rdflib": "^0.20.0",
+    "rdflib": "0.20.1",
     "register-service-worker": "^1.0.0",
     "v-clipboard": "^2.0.1",
     "vue": "^2.5.17",
