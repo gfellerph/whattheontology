@@ -33,6 +33,9 @@ server.register(ontology);
 server.register(check);
 server.register(tools);
 server.listen(process.env.PORT || 3000, (err, address) => {
+  if (err) {
+    console.log(err);
+  }
   console.log(`Server listening at ${address}`);
 });
 
