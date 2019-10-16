@@ -13,14 +13,16 @@ module.exports = {
     '^.+\\.tsx?$': 'ts-jest'
   },
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1'
+    '^@/(.*)$': '<rootDir>/src/$1',
+    '^server/(.*)$': '<rootDir>/server/$1'
   },
   snapshotSerializers: [
     'jest-serializer-vue'
   ],
   testMatch: [
     '**/tests/unit/**/*.spec.(js|jsx|ts|tsx)|**/__tests__/*.(js|jsx|ts|tsx)',
-    '**/tests/**/*.test.js'
+    '**/tests/**/*.(spec|test).js'
   ],
-  testURL: 'http://localhost/'
+  testURL: 'http://localhost/',
+  setupFiles: ["dotenv/config"],
 }
