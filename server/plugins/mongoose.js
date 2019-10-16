@@ -9,6 +9,7 @@ module.exports = plugin(async (server, options, next) => {
   try {
     await mongoose.connect(connectionString, {
       useNewUrlParser: true,
+      useUnifiedTopology: true,
     });
     server.decorate('mongo', {
       db: mongoose.connection,

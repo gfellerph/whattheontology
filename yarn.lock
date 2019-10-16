@@ -687,7 +687,7 @@
   dependencies:
     regenerator-runtime "^0.13.2"
 
-"@babel/runtime@^7.3.4", "@babel/runtime@^7.4.5":
+"@babel/runtime@^7.3.4", "@babel/runtime@^7.4.5", "@babel/runtime@^7.5.5":
   version "7.6.3"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.6.3.tgz#935122c74c73d2240cafd32ddb5fc2a6cd35cf1f"
   integrity sha512-kq6anf9JGjW8Nt5rYfEuGRaEAaH1mkv3Bbu6rYvLOpPh/RusSJXuKPEAoZ7L7gybZkchE8+NV5g9vKF4AGAtsA==
@@ -1967,6 +1967,11 @@ async@^2.6.1:
   integrity sha512-zflvls11DCy+dQWzTW2dzuilv8Z5X/pjfmZOWba6TNIVDm+2UDaJmXSOXlasHKfNBs8oo3M0aT50fDEWfKZjXg==
   dependencies:
     lodash "^4.17.14"
+
+async@^3.1.x:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/async/-/async-3.1.0.tgz#42b3b12ae1b74927b5217d8c0016baaf62463772"
+  integrity sha512-4vx/aaY6j/j3Lw3fbCHNWP0pPaTCew3F6F3hYyl/tHs/ndmV1q7NW9T5yuJ2XAGwdQrP+6Wu20x06U4APo/iQQ==
 
 asynckit@^0.4.0:
   version "0.4.0"
@@ -6604,7 +6609,7 @@ jsonld@^0.4.5:
     request "^2.61.0"
     xmldom "0.1.19"
 
-jsonld@^1.4.0, jsonld@^1.5.4:
+jsonld@^1.4.0, jsonld@^1.5.4, jsonld@^1.6.2:
   version "1.8.0"
   resolved "https://registry.yarnpkg.com/jsonld/-/jsonld-1.8.0.tgz#02960df11483a35c0c2d8d72ce13ff3d0bc2a324"
   integrity sha512-a3bwbR0wqFstxKsGoimUIIKBdfJ+yb9kWK+WK7MpVyvfYtITMpUtF3sNoN1wG/W+jGDgya0ACRh++jtTozxtyQ==
@@ -7401,7 +7406,7 @@ n3@^0.4.1:
   resolved "https://registry.yarnpkg.com/n3/-/n3-0.4.5.tgz#5b70d3ab6a21c9e8d4c9bda2a3d4d90909beb508"
   integrity sha1-W3DTq2ohyejUyb2io9TZCQm+tQg=
 
-n3@^1.0.3:
+n3@^1.0.3, n3@^1.2.0:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/n3/-/n3-1.2.1.tgz#8350b68527e5d0768dc0f0bb6e4531b7f4f8bb2f"
   integrity sha512-5va8zsh02owDul7+5bj35cGOzWU7DeJHwQK3F8NDKtiYqPgWcFTg/zLxJs1JeRF2n6j5PI/eR9DCokS7nLrevA==
@@ -7753,6 +7758,14 @@ nth-check@^1.0.2, nth-check@~1.0.1:
   integrity sha512-WeBOdju8SnzPN5vTUJYxYUxLeXpCaVP5i5e0LF8fg7WORF2Wd7wFX/pk0tYZk7s8T+J7VLy0Da6J1+wCT0AtHg==
   dependencies:
     boolbase "~1.0.0"
+
+null-loader@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/null-loader/-/null-loader-2.0.0.tgz#1c99da3f0d2c0996b51e9eada3a898a5d57472aa"
+  integrity sha512-PhEeA3v/tAacxC5dNO1i2yXzGVWWrZ9jTx+TMEJ716amvnBXzvrxIwy9HW7MyJsHe8ACQzpiQgbrAjDRMA7gcg==
+  dependencies:
+    loader-utils "^1.2.3"
+    schema-utils "^1.0.0"
 
 num2fraction@^1.2.2:
   version "1.2.2"
@@ -9099,18 +9112,7 @@ rdf-canonize@^1.0.2:
     node-forge "^0.8.1"
     semver "^5.6.0"
 
-rdflib@^0.19.1:
-  version "0.19.1"
-  resolved "https://registry.yarnpkg.com/rdflib/-/rdflib-0.19.1.tgz#66141051902c7e7e407b4b61d075461cc0c0a28c"
-  integrity sha512-O7osObhO5o++hsUPGOLTxdNwXRaI6O+uyL98E7yBmqWrQm0AfqUHFBiASb4gN9fYcLD2LLHBxfhJTIWl8VZHUg==
-  dependencies:
-    async "^0.9.x"
-    jsonld "^0.4.5"
-    n3 "^0.4.1"
-    solid-auth-client "^2.2.3"
-    xmldom "^0.1.22"
-
-rdflib@^0.20.0:
+rdflib@^0.20.1:
   version "0.20.3"
   resolved "https://registry.yarnpkg.com/rdflib/-/rdflib-0.20.3.tgz#9b478f96b59a4271195982e71000836590b639d6"
   integrity sha512-qsQp+K1qfeKafxqrx2cn6cgQubCA9aoOZCZlj1gQqKwqWMAUlfWKDrivbrrpsBzJPxuypJMdo1r6i5Bpwtjl4w==
@@ -9122,6 +9124,19 @@ rdflib@^0.20.0:
     solid-auth-cli "^0.1.12"
     solid-auth-client "^2.3.0"
     xmldom "^0.1.22"
+
+rdflib@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/rdflib/-/rdflib-1.0.4.tgz#67837a35f938fdcfbb444c77da9eb8efae795e9c"
+  integrity sha512-rnK48WLbj0sIBQwgSazPEJNhgYyfnCLgizGWo+g2TArntvFOzmH0fiChyQIOtvAaFbr3r0uPsbqm4LaB5c+t5A==
+  dependencies:
+    "@babel/runtime" "^7.5.5"
+    async "^3.1.x"
+    jsonld "^1.6.2"
+    n3 "^1.2.0"
+    solid-auth-cli "^1.0.8"
+    solid-auth-client "^2.3.0"
+    xmldom "^0.1.27"
 
 react-is@^16.8.4:
   version "16.10.2"
@@ -9728,10 +9743,12 @@ send@^0.16.0:
     range-parser "~1.2.0"
     statuses "~1.4.0"
 
-serialize-error@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/serialize-error/-/serialize-error-3.0.0.tgz#80100282b09be33c611536f50033481cb9cc87cf"
-  integrity sha512-+y3nkkG/go1Vdw+2f/+XUXM1DXX1XcxTl99FfiD/OEPUNw4uo0i6FKABfTAN5ZcgGtjTRZcEbxcE/jtXbEY19A==
+serialize-error@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/serialize-error/-/serialize-error-5.0.0.tgz#a7ebbcdb03a5d71a6ed8461ffe0fc1a1afed62ac"
+  integrity sha512-/VtpuyzYf82mHYTtI4QKtwHa79vAdU5OQpNPAmE/0UDdlGT0ZxHwC+J6gXkw29wwoVI8fMPsfcVHOwXtUQYYQA==
+  dependencies:
+    type-fest "^0.8.0"
 
 serialize-javascript@^1.7.0:
   version "1.9.1"
@@ -9930,7 +9947,7 @@ sockjs@0.3.19:
     faye-websocket "^0.10.0"
     uuid "^3.0.1"
 
-solid-auth-cli@^0.1.12, solid-auth-cli@^0.1.8:
+solid-auth-cli@^0.1.12:
   version "0.1.14"
   resolved "https://registry.yarnpkg.com/solid-auth-cli/-/solid-auth-cli-0.1.14.tgz#ebba4eea64510eca3935fd0f15c12d6223c238ce"
   integrity sha512-G1xhi4hASPW5hib1UxN10rm0X2lTYqqNQELJ4neRjcM07qWnkKUG08Q4fMFz5xeKAWjDh8ytqhvq5M349/CZsw==
@@ -9942,7 +9959,31 @@ solid-auth-cli@^0.1.12, solid-auth-cli@^0.1.8:
     n3 "^1.0.3"
     solid-rest "^1.0.2"
 
-solid-auth-client@^2.2.14, solid-auth-client@^2.2.3, solid-auth-client@^2.3.0:
+solid-auth-cli@^0.2.6:
+  version "0.2.7"
+  resolved "https://registry.yarnpkg.com/solid-auth-cli/-/solid-auth-cli-0.2.7.tgz#0e03cca6c00638d0a452451d995167c1fad7b980"
+  integrity sha512-gdcCSenM4gp9Ppi3jSFbmh5SOinY/zA8MjJ4QE0zzQE89eLoDRul8bYMJZ9Y/x7KmAFf/O32kFDNJG9Xe8QVbQ==
+  dependencies:
+    "@solid/cli" "^0.1.1"
+    async "^2.6.1"
+    isomorphic-fetch "^2.2.1"
+    jsonld "^1.4.0"
+    n3 "^1.0.3"
+    solid-rest "^1.0.2"
+
+solid-auth-cli@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/solid-auth-cli/-/solid-auth-cli-1.0.8.tgz#83e32f9eb93fa44d697e7300a27ccbf036365275"
+  integrity sha512-cZYNLM6/BDwbcywsrfFRIrGVjTPc/f3snubabqd1WRCvNwW7wkvpo0yvoHp3NQjVAfKHw5kIrZtaV8IRHPK/KQ==
+  dependencies:
+    "@solid/cli" "^0.1.1"
+    async "^2.6.1"
+    isomorphic-fetch "^2.2.1"
+    jsonld "^1.4.0"
+    n3 "^1.0.3"
+    solid-rest "^1.0.7"
+
+solid-auth-client@^2.3.0:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/solid-auth-client/-/solid-auth-client-2.3.1.tgz#bb388eccbee317a567d4530ecd4758682a3ba753"
   integrity sha512-lWTdXW94agrwNmtH0KkO0QG6qjGN+QPKo9SHdN0pESqR/wehEF10HcD52pYMthcxjdK5k/Lw84qnCLrf5SN/6A==
@@ -9953,16 +9994,17 @@ solid-auth-client@^2.2.14, solid-auth-client@^2.2.3, solid-auth-client@^2.3.0:
     commander "^2.11.0"
     isomorphic-fetch "^2.2.1"
 
-solid-file-client@^0.4.9:
-  version "0.4.9"
-  resolved "https://registry.yarnpkg.com/solid-file-client/-/solid-file-client-0.4.9.tgz#4f0db777528c483bddac8be5f39323b3eeca1adf"
-  integrity sha512-/4KmS52APjvIVea+nWD3spUYiPmq5gE/ze8fP2XufwrTXST3Oh+rRj2zjfQyhFcVXwhrV++MrUcTY/YId/kqwg==
+solid-file-client@^0.5.2:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/solid-file-client/-/solid-file-client-0.5.2.tgz#52b882f17beec5f4321d1a8d7588df3833ee4377"
+  integrity sha512-a1ZdkE6i4UvTzMtXchDkfVPCJSvxWghAWUj67/zVn4gLBFghkGhbZMjq+BFWX3C8SqD5h/AcjvXaIupsw/y+eQ==
   dependencies:
-    rdflib "^0.19.1"
-    solid-auth-cli "^0.1.8"
-    solid-auth-client "^2.2.14"
+    null-loader "^2.0.0"
+    rdflib "^0.20.1"
+    solid-auth-cli "^0.2.6"
+    solid-auth-client "^2.3.0"
 
-solid-rest@^1.0.2:
+solid-rest@^1.0.2, solid-rest@^1.0.7:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/solid-rest/-/solid-rest-1.0.7.tgz#c43017a8cac3ee8830df7b6db6da9b23c4b3ff97"
   integrity sha512-OiNKV1nW00RVdnd88HfCVIcY+LKI6VAc6DbY0Tujy5/eiURkCnxqAkMJXLd10lKmpQZ2NNYpsfBN/QWnoIBczA==
@@ -10860,6 +10902,11 @@ type-fest@^0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-0.6.0.tgz#8d2a2370d3df886eb5c90ada1c5bf6188acf838b"
   integrity sha512-q+MB8nYR1KDLrgr4G5yemftpMC7/QLqVndBmEEdqzmNj5dcFOO4Oo8qlwZE3ULT3+Zim1F8Kq4cBnikNhlCMlg==
+
+type-fest@^0.8.0:
+  version "0.8.1"
+  resolved "https://registry.yarnpkg.com/type-fest/-/type-fest-0.8.1.tgz#09e249ebde851d3b1e48d27c105444667f17b83d"
+  integrity sha512-4dbzIzqvjtgiM5rw1k5rEHtBANKmdudhGyBEajN01fEyhaAIhsoKNy6y7+IN93IfpFtwY9iqi7kD+xwKhQsNJA==
 
 type-is@~1.6.17, type-is@~1.6.18:
   version "1.6.18"
@@ -11790,7 +11837,7 @@ xmldom@0.1.19:
   resolved "https://registry.yarnpkg.com/xmldom/-/xmldom-0.1.19.tgz#631fc07776efd84118bf25171b37ed4d075a0abc"
   integrity sha1-Yx/Ad3bv2EEYvyUXGzftTQdaCrw=
 
-xmldom@^0.1.22:
+xmldom@^0.1.22, xmldom@^0.1.27:
   version "0.1.27"
   resolved "https://registry.yarnpkg.com/xmldom/-/xmldom-0.1.27.tgz#d501f97b3bdb403af8ef9ecc20573187aadac0e9"
   integrity sha1-1QH5ezvbQDr4757MIFcxh6rawOk=

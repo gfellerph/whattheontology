@@ -53,7 +53,6 @@ module.exports = async (dataset) => {
     }
     await client.indices.putMapping({
       index: 'ontology',
-      type: 'property',
       body: mappings.ontology.mappings.property
     });
   } catch (error) {
@@ -68,7 +67,6 @@ module.exports = async (dataset) => {
     acc.push({
       index: {
         _index: 'ontology',
-        _type: 'property',
         _id: current['@id'],
       }
     });

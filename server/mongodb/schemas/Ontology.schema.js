@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const serializeError = require('serialize-error');
+const { serializeError } = require('serialize-error');
 const Schema = mongoose.Schema;
 
 const Ontology = new Schema({

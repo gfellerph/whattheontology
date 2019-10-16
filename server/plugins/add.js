@@ -20,6 +20,7 @@ module.exports = function(server, options, next) {
     }},
   }, async (req, res) => {
     let log;
+    console.log('got ont', req.body.url);
     try {
       // Existence check
       log = await OntologyLogger.findOne({
@@ -47,6 +48,8 @@ module.exports = function(server, options, next) {
         log.prefix = infos.prefix;
         log.homepage = infos.homepage;
       }
+
+      console.log('fetching done, starting conversion')
       
       // Conversion step
       const jsonldData = await converter(store, req.body.url);
@@ -98,6 +101,7 @@ module.exports = function(server, options, next) {
         indexed: true,
       });
     } catch(error) {
+      console.log(error);
       if (!log) log = new OntologyLogger({ url: req.body.url });
       log.setError = error;
       await log.save(); 
