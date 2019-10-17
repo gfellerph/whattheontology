@@ -36,12 +36,9 @@
 </template>
 
 <script>
-import dict from '@/../server/ontology-dictionary.js';
-
 export default {
   data() {
     return {
-      dict,
       indexedOntologies: [],
       error: false,
       loading: false,
