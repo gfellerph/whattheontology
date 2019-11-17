@@ -16,7 +16,7 @@
   "dependencies": {
     "debounce": "^1.2.0",
     "fastify": "^1.13.0",
-    "fastify-compress": "^0.8.1",
+    "fastify-compress": "^1.1.0",
     "fastify-compression": "^1.1.0",
     "fastify-static": "^1.1.0",
     "lunr": "^2.3.5",
